@@ -1,0 +1,110 @@
+import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
+import Database from '@ioc:Adonis/Lucid/Database'
+import { strSlug } from 'App/Helpers/Index'
+
+export default class extends BaseSeeder {
+  public async run () {
+    await Database.table('insights').insert([
+      {
+        id:1,
+        user_id: '1',
+        insight_type: 'story',
+        slug: strSlug('5-rules-for-a-cleaner-home'),
+        title: '5 Rules for a Cleaner Home',
+        image_url: 'images/1.png',
+        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        created_at: new Date(),
+      },
+      {
+        id:2,
+        user_id: '1',
+        insight_type: 'article',
+        slug: strSlug('8-things-that-need-to-be-replaced-today'),
+        title: '8 Things that Need to be Replaced Today',
+        image_url: 'images/2.png',
+        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        created_at: new Date(),
+      },
+      {
+        id:3,
+        user_id: '1',
+        insight_type: 'checklist',
+        slug: strSlug('9-rules-for-cleaning-home'),
+        title: '9 Rules for Cleaning Home',
+        image_url: 'images/3.png',
+        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        created_at: new Date(),
+      },
+      {
+        id:4,
+        user_id: '1',
+        insight_type: 'story',
+        slug: strSlug('2-rules-for-a-cleaner-home'),
+        title: '2 Rules for a Cleaner Home',
+        image_url: 'images/4.png',
+        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        created_at: new Date(),
+      },
+      {
+        id:5,
+        user_id: '1',
+        insight_type: 'story',
+        slug: strSlug('1-rules-for-a-cleaner-home'),
+        title: '1 Rules for a Cleaner Home',
+        image_url: 'images/5.png',
+        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        created_at: new Date(),
+      },
+      {
+        id:6,
+        user_id: '1',
+        insight_type: 'article',
+        slug: strSlug('7-things-that-need-to-be-replaced-today'),
+        title: '7 Things that Need to be Replaced Today',
+        image_url: 'images/6.png',
+        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        created_at: new Date(),
+      },
+      {
+        id:7,
+        user_id: '1',
+        insight_type: 'checklist',
+        slug: strSlug('3-rules-for-cleaning-home'),
+        title: '3 Rules for Cleaning Home',
+        image_url: 'images/1.png',
+        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        created_at: new Date(),
+      },
+      {
+        id:8,
+        user_id: '1',
+        insight_type: 'checklist',
+        slug: strSlug('5-rules-for-cleaning-home'),
+        title: '5 Rules for Cleaning Home',
+        image_url: 'images/3.png',
+        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        created_at: new Date(),
+      },
+      {
+        id:9,
+        user_id: '1',
+        insight_type: 'checklist',
+        slug: strSlug('4-rules-for-cleaning-home'),
+        title: '4 Rules for Cleaning Home',
+        image_url: 'images/2.png',
+        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        created_at: new Date(),
+      },
+      {
+        id:10,
+        user_id: '1',
+        insight_type: 'article',
+        slug: strSlug('things-that-need-to-be-replaced-today'),
+        title: 'Things that Need to be Replaced Today',
+        image_url: 'images/4.png',
+        description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        created_at: new Date(),
+      }
+    ]);
+  }
+}

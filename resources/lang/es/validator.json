@@ -1,0 +1,13 @@
+{
+  "required":"The {{ field }} field is required.",
+  "accepted":"The {{ field }} must be accepted.",
+  "minLength":"The {{ field }} must have at least {{ options.minLength }} items.",
+  "maxLength":"The {{ field }} must not have more than {{ options.maxLength }} items.",
+  "regex":"The {{ field }} format is invalid.",
+  "required_if":"The {{ field }} field is required when {{ options.otherField }} is exist.",
+  "requiredWhen":"The {{ field }} field is required when {{ options.otherField }} is {{ options.values }}.",
+  "email":"The {{ field }} must be a valid email address.",
+  "unique":"The {{ field }} has already been taken.",
+  "confirmed":"The {{ field }} does not match.",
+  "enum":"The selected {{ field }} is invalid."
+}

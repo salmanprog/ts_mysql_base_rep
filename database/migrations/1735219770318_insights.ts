@@ -13,6 +13,7 @@ export default class extends BaseSchema {
       table.text('image_url').nullable()
       table.text('description').nullable()
       table.integer('total_favourite',11).nullable().defaultTo('0')
+      table.enu('is_premium_user',['1','0']).notNullable().defaultTo('0')
       table.enu('status',['1','0']).notNullable().defaultTo('1')
       table.timestamp('created_at', { useTz: true }).nullable()
       table.timestamp('updated_at', { useTz: true }).nullable()

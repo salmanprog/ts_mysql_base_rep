@@ -21,6 +21,9 @@ export default class Subscription extends RestModel
     public description: string
 
     @column()
+    public days: number
+
+    @column()
     public amount: number
 
     @column()
@@ -39,7 +42,7 @@ export default class Subscription extends RestModel
     public static fillable()
     {
         return [
-          'title','slug','description','amount','status','created_at','updated_at','deleted_at'
+          'title','slug','description','days','amount','status','created_at','updated_at','deleted_at'
         ]
     }
 

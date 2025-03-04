@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import PropertyCategory from 'App/Models/PropertyCategory';
+import { currentDateTime } from 'App/Helpers/Index'
 
 export default class PropertyCategoryHook
 {
@@ -24,7 +26,9 @@ export default class PropertyCategoryHook
      */
     public static async beforeCreateHook(request: any, params:any)
     {
-       
+        let propertytitle      = await PropertyCategory.generateSlug(params.title);
+        params.slug       = propertytitle
+        params.created_at = currentDateTime();
     }
 
     /**

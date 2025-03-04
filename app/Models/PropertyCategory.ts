@@ -58,12 +58,22 @@ export default class PropertyCategory extends RestModel
 
     public static async getCategory(id:number)
     {
-        console.log('check...................................',id)
         let query:any = this.query()
                         .select('id','title','slug')
                         .whereNull("deleted_at");
         let record = await query.where('id',id).where('status',1).first();
             record = record.toJSON();                  
+        return record;
+    }
+
+    public static async getCategoryArr(ids:string)
+    {
+        let arr_cat = ids.split(",")
+        let query:any = this.query()
+                        .select('id','title','slug')
+                        .whereNull("deleted_at");
+        let record = await query.whereIn('id',arr_cat).where('status',1);
+            //record = record.toJSON();                  
         return record;
     }
 }

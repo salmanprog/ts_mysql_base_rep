@@ -6,14 +6,14 @@ export default class extends BaseSeeder {
   public async run () {
     await Database.table('vendor_categories').insert([
       {
-        id:55,
+        id:79,
         title: 'Yes',
         slug: strSlug('yes1'),
         parent_id: 5,
         created_at: new Date(),
       },
       {
-        id:56,
+        id:80,
         title: 'No',
         slug: strSlug('no1'),
         parent_id: 5,

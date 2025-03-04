@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import VendorCategory from 'App/Models/VendorCategory';
+import { currentDateTime } from 'App/Helpers/Index'
 
 export default class VendorCategoryHook
 {
@@ -24,6 +26,9 @@ export default class VendorCategoryHook
      */
     public static async beforeCreateHook(request: any, params:any)
     {
+        let propertytitle      = await VendorCategory.generateSlug(params.title);
+            params.slug       = propertytitle
+            params.created_at = currentDateTime();
        
     }
 

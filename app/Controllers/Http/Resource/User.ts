@@ -1,6 +1,10 @@
 import _ from 'lodash';
 import {baseUrl,storageUrl} from 'App/Helpers/Index'
 import Subscription from './Subscription';
+import Property from './Property';
+import MdlProperty from 'App/Models/Property';
+import InsightFavorite from 'App/Models/InsightFavorite';
+import Insight from './Insight';
 
 export default class User
 {
@@ -49,10 +53,16 @@ export default class User
           is_mobile_verify:record.is_mobile_verify,
           is_email_verify:record.is_email_verify,
           platform_type:record.platform_type,
-          is_subscription:record.is_subscription,
+          is_socket:record.is_socket,
+          transaction_id:record.transaction_id,
+          gateway_type:record.gateway_type,
+          is_subscription:parseInt(record.is_subscription),
           subscription:!_.isEmpty(record.Subscription) ? await Subscription.initResponse(record.Subscription,request) : {},
           subscription_start_date:record.subscription_start_date,
           subscription_end_date:record.subscription_end_date,
+          total_property: await MdlProperty.getTotalProperty(record.id),
+          property:!_.isEmpty(record.Property) ? await Property.initResponse(record.Property,request) : [],
+          insight_favourite: await Insight.initResponse(await InsightFavorite.getFavouritInsight(record.id),request),
           total_property_task:record.total_property_task,
           total_property_task_complete:record.total_property_task_complete,
           total_property_task_pending:record.total_property_task_pending,

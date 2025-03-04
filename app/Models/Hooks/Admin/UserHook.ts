@@ -42,7 +42,7 @@ export default class UserHook
      */
     public static async beforeEditHook(request:any, params:any, slug:string)
     {
-
+        
     }
 
     /**

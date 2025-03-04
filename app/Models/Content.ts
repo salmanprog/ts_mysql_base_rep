@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import { column } from '@ioc:Adonis/Lucid/Orm'
 import RestModel from './RestModel'
+import { strSlug, rand, currentDateTime } from 'App/Helpers/Index'
 
 export default class Content extends RestModel {
 
@@ -34,4 +35,11 @@ export default class Content extends RestModel {
     {
         return ['title','slug','content','status','created_at','updated_at','deleted_at']
     }
+
+    public static async generateSlug(name:string)
+        {
+            let slug = strSlug(name);
+            let query = await this.query().where('slug',slug).count('id as total');
+            return query[0].$extras.total == 0 ? slug : slug + query[0].$extras.total + rand(111,999);
+        }
 }

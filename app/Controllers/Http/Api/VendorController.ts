@@ -103,20 +103,20 @@ export default class VendorController extends RestController
               rules.regex(/^[A-Za-z0-9\s]+$/)
             ]),
             mobile_no: schema.string.optional({},[
-                rules.minLength(10),
-                rules.maxLength(15),
-                rules.regex(/^(\+?\d{1,3}[-])\d{9,12}$/),
-                rules.unique({
-                  table: 'users',
-                  column: 'mobile_no',
-                  where: {
-                    deleted_at: null
-                  },
-                  whereNot:{
-                    slug: this.__params.id
-                  }
-                })
-            ]),
+              rules.minLength(10),
+              rules.maxLength(15),
+              rules.regex(/^\+1-\d{3}-\d{3}-\d{4}$/),
+              rules.unique({
+                table: 'users',
+                column: 'mobile_no',
+                where: {
+                  deleted_at: null
+                },
+                whereNot:{
+                  slug: this.__params.id
+                }
+              })
+          ]),
             image_url: schema.file.optional({
               size: '2mb',
               extnames: ['jpg', 'gif', 'png'],

@@ -62,9 +62,12 @@ export default class VendorInformation extends RestModel
         if(record){
                 let parent_cat:any = this.query()
                     .whereNull("deleted_at");
-                let record = await query.where('user_id',user_id).where('identifier','service_parent_id').where('status',1).first();
-
-                console.log('user_info............................................',record)
+                let parent_cat_record = await query.where('user_id',user_id).where('identifier','service_parent_id').where('status',1).first();
+                let child_cat:any = this.query()
+                    .whereNull("deleted_at");
+                let child_cat_record = await query.where('user_id',user_id).where('identifier','sub_services').where('status',1);
+                parent_cat_record = parent_cat_record.toJSON();
+                console.log('user_info............................................',parent_cat_record)
         }
         return info;
     }

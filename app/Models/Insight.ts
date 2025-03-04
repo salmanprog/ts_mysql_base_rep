@@ -35,6 +35,9 @@ export default class Insight extends RestModel
     public total_favourite: number
 
     @column()
+    public is_premium_user: number
+
+    @column()
     public status: number
 
     @column.dateTime({ autoCreate: true })
@@ -62,7 +65,7 @@ export default class Insight extends RestModel
     public static fillable()
     {
         return [
-          'title','slug','insight_type','user_id','image_url','description','total_favourite','status','created_at','updated_at','deleted_at'
+          'title','slug','insight_type','user_id','image_url','description','total_favourite','is_premium_user','status','created_at','updated_at','deleted_at'
         ]
     }
 
@@ -71,6 +74,12 @@ export default class Insight extends RestModel
         let slug = strSlug(name);
         let query = await this.query().where('slug',slug).count('id as total');
         return query[0].$extras.total == 0 ? slug : slug + query[0].$extras.total + rand(111,999);
+    }
+
+    public static async getInsightByIds(ids:Array)
+    {
+        let query = await this.query().preload('User').preload('InsightData').whereIn('id',ids).where('status',1).limit(2);
+        return query;
     }
 
 }

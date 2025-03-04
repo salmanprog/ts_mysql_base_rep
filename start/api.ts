@@ -58,7 +58,14 @@ Route
     Route.resource('vendor_categories', 'Api/VendorCategoryController').except(['create','update','destroy'])
     Route.get('subcategories/:id', 'Api/VendorCategoryController.getVendorSubCategory').as('get_vendor_sub_category');
     Route.resource('vendor', 'Api/VendorController').except(['create']);
-
+    Route.resource('review', 'Api/ReviewController').except(['update']);
+    Route.resource('chat', 'Api/ChatGroupController').except(['create','update','destroy'])
+    Route.resource('media', 'Api/MediaController').except(['update','destroy'])
+    Route.resource('visit', 'Api/ProfileVisitController').except(['update','destroy'])
+    Route.delete('delete/propertytask','Api/PropertyTaskController.propetyTaskDelete').as('delete-propertytask');
+    Route.resource('seasnoal-task', 'Api/SeasnoalCategoryController').except(['create','update','destroy'])
+    Route.post('user/selected=seasnoal-tasks','Api/SeasnoalCategoryController.userSelectTask').as('user-selected=seasnoal-tasks');
+    Route.resource('transaction', 'Api/TransactionController').except(['update','destroy'])
   })
   .prefix('api')
   .as('api')

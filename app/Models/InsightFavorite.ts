@@ -74,4 +74,24 @@ export default class InsightFavorite extends RestModel
         return record;
     }
 
+    public static async totalFavouritInsight(insight_id:number)
+    {
+      
+        let query = await this.query().where('insight_id',insight_id).getCount();
+        return query;
+    }
+
+    public static async getFavouritInsight(user_id:number)
+    {
+      
+        let query = await this.query().where('user_id',user_id);
+        let ids = []
+        if(query){
+              for(let i=0;i<query.length;i++){
+                  ids.push(query[i].insight_id)
+              }
+        }
+        let get_insight = await Insight.getInsightByIds(ids);    
+        return get_insight;
+    }
 }

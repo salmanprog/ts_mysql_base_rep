@@ -4,6 +4,8 @@ import User from 'App/Models/User'
 import _ from 'lodash'
 import { DateTime } from 'luxon'
 import RestModel from './RestModel'
+import { NumberContext } from 'twilio/lib/rest/pricing/v1/voice/number'
+import PropertyTask from 'App/Models/PropertyTask'
 
 export default class Property extends RestModel
 {
@@ -58,10 +60,10 @@ export default class Property extends RestModel
     public property_rooms: number
 
     @column()
-    public property_extra_space: number
+    public property_extra_space: string
 
     @column()
-    public property_landscape: number
+    public property_landscape: string
 
     @column()
     public property_air_conditions: number
@@ -73,7 +75,7 @@ export default class Property extends RestModel
     public property_solar_panel: number
 
     @column()
-    public property_household: number
+    public property_household: string
 
     @column()
     public property_notification: number
@@ -96,6 +98,11 @@ export default class Property extends RestModel
       })
       public User: HasOne<typeof User>
 
+    @hasMany(() => PropertyTask, {
+    foreignKey: 'property_id',
+    localKey: 'id'
+    })
+    public PropertyTask: HasMany<typeof PropertyTask> 
 
     public static fillable()
     {
@@ -113,7 +120,42 @@ export default class Property extends RestModel
 
     public static async checkCategory(id:number,category_id:number,category_col:string)
     {
-        let query = await this.query().where('id',id).where(category_col,category_id).count('id as total');
-        return query[0].$extras.total == 0 ? 0 : 1;
+        if(category_col == 'property_extra_space' || category_col == 'property_household' || category_col == 'property_landscape'){
+            let get_cat_arr:any = this.query()
+                            .select(category_col)
+                            .whereNull("deleted_at");
+            let cat_arr = await get_cat_arr.where('id',id).where('status',1).first();
+            cat_arr = cat_arr.toJSON()
+            let arr_cat = ''
+            if(category_col == 'property_extra_space'){
+                arr_cat = cat_arr.property_extra_space.split(",");
+            }else if(category_col == 'property_household'){
+                arr_cat = cat_arr.property_household.split(",");
+            }else if(category_col == 'property_landscape'){
+                arr_cat = cat_arr.property_landscape.split(",");
+            }
+            let check_id = arr_cat.includes(category_id.toString());
+            if(check_id == true){
+                return 1;
+            }else{
+                return 0;
+            }
+        }else{
+            let query = await this.query().where('id',id).where(category_col,category_id).count('id as total');
+            return query[0].$extras.total == 0 ? 0 : 1;
+        }
+      
+        
     }
+
+    public static async getTotalProperty(user_id:NumberContext)
+        {
+            let query:any  = this.query()
+                                  .select()
+                                  .whereNull("deleted_at");
+                  query = query.where('user_id',user_id)
+    
+             query = await query.count('id as total');
+            return query[0].$extras.total;
+        }
 }

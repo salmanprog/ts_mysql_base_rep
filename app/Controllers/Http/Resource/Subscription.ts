@@ -37,6 +37,7 @@ export default class Subscription
           title: record.title,
           slug: record.slug,
           description: record.description,
+          days:record.days,
           amount: record.amount,
           status:record.status,
           created_at: record.created_at

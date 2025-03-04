@@ -22,7 +22,9 @@ export default class InsightHook
         if(!_.isEmpty(params.is_popular)){
             query.where('total_favourite','>',0)
         }
-        query.preload('User').preload('InsightData').where('status',1)
+        query.preload('User').preload('InsightData',function(fltr){
+            fltr.whereNull('deleted_at')
+        }).where('status',1)
     }
 
     /**

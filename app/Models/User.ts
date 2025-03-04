@@ -9,6 +9,7 @@ import { DateTime } from 'luxon'
 import jwt from 'jsonwebtoken'
 import RestModel from './RestModel'
 import UserApiToken from 'App/Models/UserApiToken'
+import Property from 'App/Models/Property'
 import UserDeviceToken from './UserDeviceToken'
 import Subscription from './Subscription'
 
@@ -98,7 +99,22 @@ export default class User extends RestModel
     public is_subscription: number
 
     @column()
+    public is_socket: number
+
+    @column()
+    public transaction_id: string
+
+    @column()
+    public gateway_type: string
+
+    @column()
     public subscripton_id: number
+
+    @column()
+    public subscription_title: string
+
+    @column()
+    public subscription_amount: number
 
     @column()
     public subscription_start_date: string | null
@@ -128,6 +144,9 @@ export default class User extends RestModel
     public platform_id: string | null
 
     @column()
+    public total_property: number
+    
+    @column()
     public total_property_task: number
 
     @column()
@@ -135,6 +154,15 @@ export default class User extends RestModel
 
     @column()
     public total_property_task_pending: number
+
+    @column()
+    public total_review: number
+
+    @column()
+    public total_visit: number
+
+    @column()
+    public total_rating: string
 
     @hasOne(() => UserApiToken, {
       foreignKey: 'user_id',
@@ -148,6 +176,12 @@ export default class User extends RestModel
       })
       public Subscription: HasOne<typeof Subscription>
 
+    @hasMany(() => Property, {
+    foreignKey: 'user_id',
+    localKey: 'id'
+    })
+    public Property: HasMany<typeof Property>  
+
     @hasMany(() => UserDeviceToken, {
       foreignKey: 'user_id',
       localKey: 'id'
@@ -160,7 +194,7 @@ export default class User extends RestModel
           'user_group_id','user_type','name','username','slug','about_us','email','mobile_no','gender','dob','password','image_url',
           'blur_image','is_mobile_verify','mobile_verify_at','is_email_verify','email_verify_at','status','platform_type',
           'country','city','state','zipcode','address','latitude','longitude','online_status','mobile_otp','platform_id',
-          'email_otp','mobile_otp_created_at','email_otp_created_at','is_subscription','subscripton_id','subscription_start_date','subscription_end_date','total_property_task','total_property_task_complete','total_property_task_pending','created_at','updated_at','deleted_at'
+          'email_otp','mobile_otp_created_at','email_otp_created_at','is_subscription','is_socket','transaction_id','gateway_type','subscripton_id','subscription_title','subscription_amount','subscription_start_date','subscription_end_date','total_property','total_property_task','total_property_task_complete','total_property_task_pending','total_review','total_visit','total_rating','created_at','updated_at','deleted_at'
         ]
     }
 
@@ -198,6 +232,11 @@ export default class User extends RestModel
     {
         let record = await this.query().where('email',email).whereNull('deleted_at').first();
         return record;
+    }
+
+    public static async getUserBySlug(slug) {
+        let query = await this.query().where('users.slug', slug).whereNull('deleted_at').first()
+        return query;
     }
 
     public static async updateUser(data:any,condition:any)

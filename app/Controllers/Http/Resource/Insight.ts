@@ -36,6 +36,7 @@ export default class Insight
   private static async jsonSchema(record: any,request:any)
   {
       let isFavourite = await InsightFavorite.query().where('insight_id',record.id).where('user_id',request.user().id).getCount();
+      let total_favourite = await InsightFavorite.totalFavouritInsight(record.id)
       return {
           id: record.id,
           title: record.title,
@@ -45,7 +46,9 @@ export default class Insight
           image_url: !_.isEmpty(record.image_url) ?  await storageUrl(record.image_url) : baseUrl('/images/user-placeholder.jpg'),
           description: record.description,
           list: !_.isEmpty(record.InsightData) ? await InsightData.initResponse(record.InsightData,request) : [],
+          total_favourite: parseInt(total_favourite),
           is_favourite: parseInt(isFavourite),
+          is_premium_user:parseInt(record.is_premium_user),
           status:record.status,
       }
   }

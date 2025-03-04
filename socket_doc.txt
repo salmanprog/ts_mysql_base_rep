@@ -1,0 +1,44 @@
+http://127.0.0.1:3333
+
+{
+    "transports": ["websocket"],
+    "query": { 
+      "Authorization": "STnoyrRVYEXfrft/w5IfL3Ci8wl0CTnVehlNGbXx9lPMq7ia41897tx2EXeBIPnCT/kz1ZZRdusc+EfrzWsuV3vXt1YaB/rXmp+Z+BmskYwGR5xuLjNYqlK6AvluzS8wV0jPY4mP7jQO12+Wo94SYn0ImaStaSqt6aKperFoMOCoYS4k51RqH+tc06ub99u1b7c/LcD53xTNcGfdIPrhG+HIZNqc7e0LvgP7L91U/F7698OCFTUNjZR4zpMW/sie3XfMqM6DedWMpigkpui7CZuMWYXbxRuHK1V66ZdCHxH0ks5KoHwc7ROLC6niWA+YAN5mH2CmvGDeknq0/LU5pVeY1fXG7vmXaJyPE1/aXZm9uPlmB2nOrinEP42bJF5X6A/zzyszvEzrdWiryjHPAqxhlX39JdJD12XGz/H/YBtyLVv5olAl3sE/yiTviK+IxVDMDe5T5DcHmjVNUnT6uYLROPQgFU0d1VaNL5LN+8KqiWCXItHR6h1yOfmNjC7FCJ14uvKA2wkN8BdouyALLi3P4WwTKqboyTu+OCu4zmd94jGhAH8jd1A6FLda8vzw0NY5FRGFtZNE53O87DJ1pQjFykiawFV0l6egZM3rA8CLbouxHMubO2EFOS8Cb9gaaMON75t1lLgsH5bt6194+qAuI0dFC07iWEER3H9GML4P2icA2pMpb6CaCgtlnRCNEGyvP/rnwloZQ3AV6B1TWSiKV2e51TL8amGd7pmisnoPObtcelX06pc7TDltNe6K+4Neu2luxZoJg9MZIgtTcdP/WrPzR3NtfiUuxqXcFxNGOoU/cL/oiEvO6L2YGAJDFgFSPfR12Zf2vO2SoNJJ645lglmu8eVkdcSThLenYX/Zq9NDGF9Fpi69iMAPfyg11mW8wBbzBAmNH6+EHO4L6IQUHyeL4tsCUqK6RHhNgGFWsz09+DV2btL8gz1YqqlQD+ZTpOTn1uxncK8YBNO7V15XJeuHt/0wajws6O2sAAxyUdyOdBBff1yN6tD/PVb7gnuiko5wyTXP0JNJ2ytwRp3p9577aTftVYvm8YsFYyD+RGLEwK8j0Kn44+DEty3JtG1glVRLs4Rtx7vlSFPVH23w7bR997gzBAf+fyqE/U58N/Mf6WkM9Tik/fHYyqjLs3URZZBwobzAA1HVctV/eOsQhKH6hXzlpnwl/JagGFgmhwc8T8GQYGAfo0wSN+q5WxrFQDgQ6UAUimgj9O3PkoPygnsS4q0zeke22xr2BGGSmpuL20P7odAqozvDSzEZc/6FeA9XtSSe9SeFtb0o+V4wAhHc7H9JHff0xrsLIGEc5tVbgdOiEagC/t3RE1uun+ys5sR0B40/+ofE6Z1sHP6cce4p1L7e4HsnSKNUhXmrHN/DbZK6rCkKhNKIPWGePN5R8RKo29+OCwn36yH53g=="
+    }
+}
+
+-----------------------------------------------------
+
+Emit _join_room
+
+params
+{
+	"user_id":"3"
+}
+
+listner _on_join_room
+------------------------------------------------------
+
+Emit _send_message
+
+params
+{
+	"reciever_id":"3",
+	"sender_id":"2",
+	"message":"Hi Hello World",
+	"type":"text"
+}
+
+listner _recieve_message
+------------------------------------------------------
+
+Emit _load_recent_chat
+
+params
+{
+	"reciever_id":"3",
+	"sender_id":"2"
+}
+
+listner _recent_chat
+-----------------------------------------------------

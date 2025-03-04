@@ -71,7 +71,7 @@
     <div class="nano">
         <div class="nano-content sidebar-nav">
             <div class="card-body border-bottom text-center nav-profile">
-                <div class="notify setpos"> <span class="heartbit"></span> <span class="point"></span> </div>
+                {{--  <div class="notify setpos"> <span class="heartbit"></span> <span class="point"></span> </div>  --}}
                 
                 <p class="lead margin-b-0 toggle-none">{{ auth.user.name }}</p>
                 <p class="text-muted mv-0 toggle-none">Welcome</p>
@@ -83,21 +83,21 @@
                         <i class="fa fa-home"></i> <span class="toggle-none">Dashboard</span>
                     </a>
                 </li>
-                <li data-type="parent" class="nav-item">
+                {{--  <li data-type="parent" class="nav-item">
                     <a class="nav-link" href="{{ route('admin.application-setting') }}">
                         <i class="fa fa-cog"></i> <span class="toggle-none">Application Setting</span>
                     </a>
-                </li>
+                </li>  --}}
                 <li data-type="parent" class="nav-item">
                     <a class="nav-link" href="{{ route('admin.user.index') }}">
                         <i class="fa fa-users"></i> <span class="toggle-none">Users Management</span>
                     </a>
                 </li>
-                <li data-type="parent" class="nav-item">
+                {{--  <li data-type="parent" class="nav-item">
                     <a class="nav-link" href="{{ route('admin.faq.index') }}">
                         <i class="fa fa-question-circle"></i> <span class="toggle-none">Faq Management</span>
                     </a>
-                </li>
+                </li>  --}}
                 <li data-type="parent" class="nav-item">
                     <a class="nav-link" href="{{ route('admin.content.index') }}">
                         <i class="fa fa-edit"></i> <span class="toggle-none">Content Management</span>

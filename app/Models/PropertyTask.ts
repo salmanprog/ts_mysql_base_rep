@@ -93,13 +93,13 @@ export default class PropertyTask extends RestModel
         let query:any  = this.query()
                               .select()
                               .whereNull("deleted_at");
-            if(!_.isEmpty(user_id)){
+            if(_.isEmpty(user_id)){
               query = query.where('user_id',user_id)
             }
             if(!_.isEmpty(task_status) && task_status != '0'){
               query = query.where('task_status',task_status)
             }
-
+            
          query = await query.count('id as total');
         return query[0].$extras.total;
     }

@@ -41,5 +41,9 @@
   "otp_invalid":"OTP is invalid",
   "mobile_no_verified":"Mobile number has been verified successfully",
   "favourite_item_exist":"This item already in your favourite list",
-  "invalid_role":"Invalid role"
+  "invalid_role":"Invalid role",
+  "transaction_already_exist":"Transaction id already exist",
+  "transaction_expire":"Transaction has been expire",
+  "cannot_delete":"You can't delete this because already associated with the property",
+  "service_cannot_delete":"You can't delete this because already associated with the vendor"
 }

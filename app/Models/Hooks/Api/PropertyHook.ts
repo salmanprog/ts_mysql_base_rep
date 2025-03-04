@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import Property from 'App/Models/Property';
 import { currentDateTime } from 'App/Helpers/Index'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class PropertyHook
 {
@@ -16,7 +17,7 @@ export default class PropertyHook
      */
     public static async indexQueryHook(query: any, request: any, slug:string = '')
     {
-       query.preload('User').where('user_id',request.user().id).where('status',1)
+       query.preload('User').preload('PropertyTask').where('user_id',request.user().id).where('status',1)
     }
 
     /**
@@ -40,7 +41,11 @@ export default class PropertyHook
      */
     public static async afterCreateHook(record:any, request:any, params:any)
     {
-       
+       let user = request.user();
+       let getTotalProperty = await Property.getTotalProperty(user.id);
+        await Database.query().from('users').where('id',user.id).update({
+            total_property: getTotalProperty
+        })
     }
 
     /**
@@ -84,6 +89,10 @@ export default class PropertyHook
      */
     public static async afterDeleteHook(request:any, params:any, slug:string)
     {
-
+        let user = request.user();
+        let getTotalProperty = await Property.getTotalProperty(user.id);
+            await Database.query().from('users').where('id',user.id).update({
+                total_property: getTotalProperty
+            })
     }
 }

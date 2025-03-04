@@ -99,6 +99,12 @@ export default class Vendor extends RestModel
     public is_subscription: number
 
     @column()
+    public transaction_id: string
+
+    @column()
+    public gateway_type: string
+
+    @column()
     public subscripton_id: number
 
     @column()
@@ -129,6 +135,27 @@ export default class Vendor extends RestModel
     public platform_id: string | null
 
     @column()
+    public country: string
+
+    @column()
+    public city: string
+
+    @column()
+    public state: string
+
+    @column()
+    public zipcode: string
+
+    @column()
+    public address: string
+
+    @column()
+    public latitude: string
+
+    @column()
+    public longitude: string
+
+    @column()
     public total_property_task: number
 
     @column()
@@ -136,6 +163,15 @@ export default class Vendor extends RestModel
 
     @column()
     public total_property_task_pending: number
+
+    @column()
+    public total_review: number
+
+    @column()
+    public total_visit: number
+
+    @column()
+    public total_rating: string
 
     @hasOne(() => UserApiToken, {
       foreignKey: 'user_id',
@@ -168,7 +204,7 @@ export default class Vendor extends RestModel
           'user_group_id','user_type','name','username','slug','about_us','email','mobile_no','gender','dob','password','image_url',
           'blur_image','is_mobile_verify','mobile_verify_at','is_email_verify','email_verify_at','status','platform_type',
           'country','city','state','zipcode','address','latitude','longitude','online_status','mobile_otp','platform_id',
-          'email_otp','mobile_otp_created_at','email_otp_created_at','is_subscription','subscripton_id','subscription_start_date','subscription_end_date','total_property_task','total_property_task_complete','total_property_task_pending','created_at','updated_at','deleted_at'
+          'email_otp','mobile_otp_created_at','email_otp_created_at','is_subscription','transaction_id','gateway_type','subscripton_id','subscription_start_date','subscription_end_date','total_property_task','total_property_task_complete','total_property_task_pending','total_review','total_rating','total_visit','created_at','updated_at','deleted_at'
         ]
     }
 
@@ -181,7 +217,7 @@ export default class Vendor extends RestModel
 
     public static async getUserByEmail(email:string)
     {
-        let record = await this.query().where('email',email).whereNull('deleted_at').first();
+        let record = await this.query().preload('VendorInformation').preload('Subscription').where('email',email).whereNull('deleted_at').first();
         return record;
     }
 

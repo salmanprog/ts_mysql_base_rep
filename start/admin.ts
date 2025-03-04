@@ -10,41 +10,57 @@
 */
 import Route from '@ioc:Adonis/Core/Route'
 
+Route.group( () => {
+  Route.post('login', 'Api/Admin/AuthController.login').as('login');
+  Route.resource('application-content', 'Api/Admin/ContentController')
+      .middleware({
+        index: ['apiAuth'],
+  })
+}).prefix('api/admin').middleware(['apiAuthorization'])
 
+
+// authentication routes
 Route
-  .group(() => {
+.group(() => {
 
-      // Named as admin.login
+  Route.resource('user', 'Api/Admin/AuthController')
+      .middleware({
+        index: ['apiAuth'],
+  })
+  Route.resource('users', 'Api/Admin/UsersController')
+      .middleware({
+        index: ['apiAuth'],
+        update: ['apiAuth'],
+  })
+  Route.resource('vendors', 'Api/Admin/VendorController')
+      .middleware({
+        index: ['apiAuth'],
+  })
+  Route.resource('insights', 'Api/Admin/InsightController')
+      .middleware({
+        index: ['apiAuth'],
+  })
+  Route.resource('insights_data', 'Api/Admin/InsightDataController')
+      .middleware({
+        index: ['apiAuth'],
+  })
+  Route.resource('properties_types', 'Api/Admin/PropertyCategoryController')
+      .middleware({
+        index: ['apiAuth'],
+  })
 
-      Route.group( () => {
-
-        Route.route('login',['GET','POST'],'Admin/AuthController.login').as('login')
-        Route.route('forgot-password',['GET','POST'],'Admin/AuthController.forgotPassword').as('forgot-password');
-        Route.route('reset-pass/:email',['GET','POST'],'Admin/AuthController.resetPassword').as('reset-password');
-      }).middleware('adminRedirectIfAuthenticate')
-
-
-      Route.group( () => {
-
-          Route.get('dashboard/small-widget','Admin/DashboardController.getSmallWidget').as('admin.dashboard.small-widget');
-          Route.get('dashboard/line-chart','Admin/DashboardController.getLineChart').as('admin.dashboard.line-chart');
-          Route.get('dashboard','Admin/DashboardController.index').as('dashboard')
-          Route.route('profile',['GET','POST'],'Admin/AdminController.profile').as('profile');
-          Route.route('change-password',['GET','POST'],'Admin/AdminController.changePassword').as('change-password')
-          Route.get('logout','Admin/AdminController.logout').as('logout');
-
-          Route.route('application-setting',['GET','POST'],'Admin/ApplicationSettingController.setting').as('application-setting');
-
-          Route.get('user/ajax-listing','Admin/UserController.ajaxListing').as('user.ajaxlsiting');
-          Route.resource('user', 'Admin/UserController').except(['store','destroy']);
-
-          Route.get('faq/ajax-listing','Admin/FaqController.ajaxListing').as('faq.ajaxlsiting');
-          Route.resource('faq', 'Admin/FaqController');
-
-          Route.get('content/ajax-listing','Admin/ContentController.ajaxListing').as('content.ajaxlsiting');
-          Route.resource('content','Admin/ContentController').except(['store','destroy']);
-
-      }).middleware('adminAuth')
-   })
-  .prefix('admin')
-  .as('admin')
+  Route.resource('vendor_category', 'Api/Admin/VendorCategoryController')
+      .middleware({
+        index: ['apiAuth'],
+  })
+  
+  Route.get('dashboard','Api/Admin/UsersController.userDashboard').as('dashboard').middleware('apiAuth')
+  Route.post('user/change-password','Api/UsersController.changePassword').as('user.change-password').middleware('apiAuth')
+  Route.post('logout','Api/Admin/AuthController.userLogout').as('logout');
+  //Menu
+  Route.route('application/setting',['GET','POST'],'Api/Admin/ApplicationSettingController.getSetting').as('application.setting');
+  
+})
+.prefix('api/admin')
+.as('api/admin')
+.middleware(['apiAuthorization','apiAuth'])

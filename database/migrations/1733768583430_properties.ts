@@ -21,12 +21,12 @@ export default class extends BaseSchema {
       table.integer('property_colors').unsigned().references('id').inTable('property_categories').onDelete('CASCADE').onUpdate('NO ACTION');
       table.integer('property_home').unsigned().references('id').inTable('property_categories').onDelete('CASCADE').onUpdate('NO ACTION');
       table.integer('property_rooms').unsigned().references('id').inTable('property_categories').onDelete('CASCADE').onUpdate('NO ACTION');
-      table.integer('property_extra_space').unsigned().references('id').inTable('property_categories').onDelete('CASCADE').onUpdate('NO ACTION');
-      table.integer('property_landscape').unsigned().references('id').inTable('property_categories').onDelete('CASCADE').onUpdate('NO ACTION');
+      table.string('property_extra_space',255).nullable();
+      table.string('property_landscape',255).nullable();;
       table.integer('property_air_conditions').unsigned().references('id').inTable('property_categories').onDelete('CASCADE').onUpdate('NO ACTION');
       table.integer('property_furnace').unsigned().references('id').inTable('property_categories').onDelete('CASCADE').onUpdate('NO ACTION');
       table.integer('property_solar_panel').unsigned().references('id').inTable('property_categories').onDelete('CASCADE').onUpdate('NO ACTION');
-      table.integer('property_household').unsigned().references('id').inTable('property_categories').onDelete('CASCADE').onUpdate('NO ACTION');
+      table.string('property_household',255).nullable();
       table.integer('property_notification').unsigned().references('id').inTable('property_categories').onDelete('CASCADE').onUpdate('NO ACTION');
       table.enu('status',['1','0']).notNullable().defaultTo('1')
       table.timestamp('created_at', { useTz: true }).nullable()

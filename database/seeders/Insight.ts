@@ -13,6 +13,7 @@ export default class extends BaseSeeder {
         title: '5 Rules for a Cleaner Home',
         image_url: 'images/1.png',
         description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        is_premium_user: '0',
         created_at: new Date(),
       },
       {
@@ -23,6 +24,7 @@ export default class extends BaseSeeder {
         title: '8 Things that Need to be Replaced Today',
         image_url: 'images/2.png',
         description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        is_premium_user: '0',
         created_at: new Date(),
       },
       {
@@ -33,6 +35,7 @@ export default class extends BaseSeeder {
         title: '9 Rules for Cleaning Home',
         image_url: 'images/3.png',
         description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        is_premium_user: '1',
         created_at: new Date(),
       },
       {
@@ -43,6 +46,7 @@ export default class extends BaseSeeder {
         title: '2 Rules for a Cleaner Home',
         image_url: 'images/4.png',
         description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        is_premium_user: '0',
         created_at: new Date(),
       },
       {
@@ -53,6 +57,7 @@ export default class extends BaseSeeder {
         title: '1 Rules for a Cleaner Home',
         image_url: 'images/5.png',
         description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        is_premium_user: '1',
         created_at: new Date(),
       },
       {
@@ -63,6 +68,7 @@ export default class extends BaseSeeder {
         title: '7 Things that Need to be Replaced Today',
         image_url: 'images/6.png',
         description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        is_premium_user: '1',
         created_at: new Date(),
       },
       {
@@ -73,6 +79,7 @@ export default class extends BaseSeeder {
         title: '3 Rules for Cleaning Home',
         image_url: 'images/1.png',
         description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        is_premium_user: '1',
         created_at: new Date(),
       },
       {
@@ -83,6 +90,7 @@ export default class extends BaseSeeder {
         title: '5 Rules for Cleaning Home',
         image_url: 'images/3.png',
         description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        is_premium_user: '0',
         created_at: new Date(),
       },
       {
@@ -93,6 +101,7 @@ export default class extends BaseSeeder {
         title: '4 Rules for Cleaning Home',
         image_url: 'images/2.png',
         description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        is_premium_user: '0',
         created_at: new Date(),
       },
       {
@@ -103,6 +112,7 @@ export default class extends BaseSeeder {
         title: 'Things that Need to be Replaced Today',
         image_url: 'images/4.png',
         description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text everLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever',
+        is_premium_user: '0',
         created_at: new Date(),
       }
     ]);

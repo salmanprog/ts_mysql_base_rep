@@ -6,17 +6,17 @@ export default class extends BaseSeeder {
   public async run () {
     await Database.table('vendor_categories').insert([
       {
-        id:26,
+        id:31,
         title: 'Power Electronics',
         slug: strSlug('power_electronics'),
-        parent_id: 9,
+        parent_id: 8,
         created_at: new Date(),
       },
       {
-        id:27,
+        id:32,
         title: 'Micro Electronics',
         slug: strSlug('microelectronics'),
-        parent_id: 9,
+        parent_id: 8,
         created_at: new Date(),
       }
     ]);

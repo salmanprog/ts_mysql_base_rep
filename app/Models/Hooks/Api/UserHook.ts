@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import FileUpload from 'App/Libraries/FileUpload/FileUpload'
 import User from 'App/Models/User';
+import Subscription from 'App/Models/Subscription';
 import Hash from '@ioc:Adonis/Core/Hash'
 import { sendMail, currentDateTime } from 'App/Helpers/Index'
 import Database from '@ioc:Adonis/Lucid/Database'
@@ -35,6 +36,7 @@ export default class UserHook
      */
     public static async indexQueryHook(query: any, request: any, slug:string = '')
     {
+        let params = request.all();
         query.select('users.*')
         if( typeof request.apiToken == 'function' && !_.isEmpty(slug) )
         {
@@ -42,7 +44,14 @@ export default class UserHook
             userApiTokenQuery.where('api_token', request.apiToken())
           })
         }
-        query.preload('Subscription');
+        if(!_.isEmpty(params.user_group_id)){
+            query.preload('Subscription').preload('Property');
+        }else{
+            query.preload('Subscription').preload('Property',function(t){
+                t.preload('PropertyTask')
+            }).where('user_type','user');
+        }
+        
     }
 
     /**
@@ -57,6 +66,8 @@ export default class UserHook
             params.mobile_otp_created_at = currentDateTime();
         }
         let username      = await User.generateSlug(params.name);
+        let subs_id = !_.isEmpty(params.subscripton_id) ? params.subscripton_id : "1";
+        let get_subscription = await Subscription.query().where('id',subs_id).first();        
         let current_date = moment().format("YYYY-MM-DD")
         //params.user_group_id = 3;
         params.user_type  = (params.user_group_id == 3) ? 'user' : 'vendor';
@@ -64,9 +75,12 @@ export default class UserHook
         params.username   = username
         params.slug       = username
         params.is_email_verify       = 1
-        params.subscripton_id = !_.isEmpty(params.subscripton_id) ? params.subscripton_id : "1"
+        params.is_subscription = (subs_id == 1) ? '0' : '1'
+        params.subscripton_id = get_subscription?.id
+        params.subscription_title = get_subscription?.title
+        params.subscription_amount = get_subscription?.amount
         params.subscription_start_date = current_date
-        params.subscription_end_date = moment(moment().format(current_date,"YYYY-MM-DD")).add(3, 'days').format("YYYY-MM-DD")
+        params.subscription_end_date = moment(moment().format(current_date,"YYYY-MM-DD")).add(get_subscription?.days, 'days').format("YYYY-MM-DD")
         params.created_at = currentDateTime();
     }
 

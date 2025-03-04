@@ -6,26 +6,26 @@ export default class extends BaseSeeder {
   public async run () {
     await Database.table('vendor_categories').insert([
       {
-        id:15,
-        title: 'Pipefitters and Steamfitters',
-        slug: strSlug('pipefitters_and_steamfitters'),
+        id:24,
+        title: 'Pipe',
+        slug: strSlug('pipe'),
         parent_id: 6,
         created_at: new Date(),
       },
       {
-        id:16,
-        title: 'Water Supply Plumbers',
-        slug: strSlug('water_supply_plumbers'),
+        id:25,
+        title: 'Water',
+        slug: strSlug('water'),
         parent_id: 6,
         created_at: new Date(),
       },{
-        id:17,
-        title: 'Sanitary Engineering',
-        slug: strSlug('sanitary_engineering'),
+        id:26,
+        title: 'Sanitary',
+        slug: strSlug('sanitary'),
         parent_id: 6,
         created_at: new Date(),
       },{
-        id:18,
+        id:27,
         title: 'Drainage',
         slug: strSlug('drainage'),
         parent_id: 6,

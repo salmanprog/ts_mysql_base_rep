@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.string('title',100).notNullable().unique()
       table.string('slug',100).notNullable().unique()
       table.string('description',255).nullable()
+      table.integer('days',10).notNullable().defaultTo('0')
       table.integer('amount',10).notNullable().defaultTo('0')
       table.enu('status',['1','0']).notNullable().defaultTo('1')
       table.timestamp('created_at', { useTz: true }).nullable()

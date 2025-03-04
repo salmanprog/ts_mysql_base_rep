@@ -7,6 +7,7 @@ import Database from '@ioc:Adonis/Lucid/Database'
 import Application  from '@ioc:Adonis/Core/Application'
 import Encryption from '@ioc:Adonis/Core/Encryption'
 import Env from '@ioc:Adonis/Core/Env'
+import Subscription from 'App/Models/Subscription';
 import UserDeviceToken from 'App/Models/UserDeviceToken';
 import VendorInformation from 'App/Models/VendorInformation';
 const moment = require('moment');
@@ -36,6 +37,7 @@ export default class VendorHook
      */
     public static async indexQueryHook(query: any, request: any, slug:string = '')
     {
+        let params = request.all();
         query.select('users.*')
         if( typeof request.apiToken == 'function' && !_.isEmpty(slug) )
         {
@@ -43,7 +45,10 @@ export default class VendorHook
             userApiTokenQuery.where('api_token', request.apiToken())
           })
         }
-        query.preload('VendorInformation').where('users.user_type','vendor');
+        if(!_.isEmpty(params.is_subscription)){
+            query.where('is_subscription',params.is_subscription)
+        }
+        query.preload('VendorInformation').preload('Subscription').where('users.user_type','vendor');
     }
 
     /**
@@ -59,15 +64,20 @@ export default class VendorHook
         }
         let username      = await Vendor.generateSlug(params.name);
         let current_date = moment().format("YYYY-MM-DD")
+        let subs_id = !_.isEmpty(params.subscripton_id) ? params.subscripton_id : "1";
+        let get_subscription = await Subscription.query().where('id',subs_id).first();
         //params.user_group_id = 3;
         params.user_type  = 'vendor';
         params.password   = await Hash.make(params.password)
         params.username   = username
         params.slug       = username
         params.is_email_verify       = 1
-        params.subscripton_id = !_.isEmpty(params.subscripton_id) ? params.subscripton_id : "1"
+        params.is_subscription = (subs_id == 1) ? '0' : '1'
+        params.subscripton_id = get_subscription?.id
+        params.subscription_title = get_subscription?.title
+        params.subscription_amount = get_subscription?.amount
         params.subscription_start_date = current_date
-        params.subscription_end_date = moment(moment().format(current_date,"YYYY-MM-DD")).add(3, 'days').format("YYYY-MM-DD")
+        params.subscription_end_date = moment(moment().format(current_date,"YYYY-MM-DD")).add(get_subscription?.days, 'days').format("YYYY-MM-DD")
         params.created_at = currentDateTime();
     }
 
@@ -134,7 +144,10 @@ export default class VendorHook
           params.image_url  = await FileUpload.doUpload(request.file('image_url'),'user');
           //params.blurimage  = await FileUpload.createBlurHash(params.image_url);
         }
+
+
         let vendor_services = request.all();
+        console.log('vendor_services........................',vendor_services)
         let ser_one = await VendorInformation.query().where('user_id',request.user().id).where('identifier','service_parent_id').first();
         let ser_two = await VendorInformation.query().where('user_id',request.user().id).where('identifier','service_area').first();
         let ser_three = await VendorInformation.query().where('user_id',request.user().id).where('identifier','available_hours').first();
@@ -145,7 +158,6 @@ export default class VendorHook
         let ser_eight = await VendorInformation.query().where('user_id',request.user().id).where('identifier','emergency_hour').first();
         let ser_nine = await VendorInformation.query().where('user_id',request.user().id).where('identifier','description').first();
         let ser_ten = await VendorInformation.query().where('user_id',request.user().id).where('identifier','is_notification').first();
-
         let old_ser_one = !_.isEmpty(ser_one) ? ser_one.service_id : '';
         let old_ser_two = !_.isEmpty(ser_two) ? ser_two.txt_field : '';
         let old_ser_three = !_.isEmpty(ser_three) ? ser_three.service_id : '';
@@ -168,12 +180,27 @@ export default class VendorHook
         }
         vendor_service_arr.push(service_parent)
         if(!_.isEmpty(vendor_services.services_types_id)){
-            let sub_services = vendor_services.services_types_id
+            
+            let sub_services = JSON.parse(vendor_services.services_types_id)
+            //let sub_services = vendor_services.services_types_id
             for(let i=0;i<sub_services.length;i++){
                 let service_sub = {
                     user_id:request.user().id,
                     slug:request.user().id+'_service_parent_id'+sub_services[i],
                     service_id:sub_services[i],
+                    identifier:'sub_services',
+                    txt_field:null,
+                    created_at: currentDateTime()
+                }
+                vendor_service_arr.push(service_sub)
+            }
+        }else{
+            let get_sub_services = await VendorInformation.query().where('user_id',request.user().id).where('identifier','sub_services');
+            for(let i=0;i<get_sub_services.length;i++){
+                let service_sub = {
+                    user_id:get_sub_services[i].user_id,
+                    slug:request.user().id+'_service_parent_id'+get_sub_services[i].id,
+                    service_id:get_sub_services[i].service_id,
                     identifier:'sub_services',
                     txt_field:null,
                     created_at: currentDateTime()
@@ -190,24 +217,62 @@ export default class VendorHook
             created_at: currentDateTime()
         }
         vendor_service_arr.push(service_area)
-        let available_hours = {
-            user_id:request.user().id,
-            slug:request.user().id+'_available_hours',
-            service_id:!_.isEmpty(vendor_services.available_hours) ? vendor_services.available_hours : old_ser_three,
-            identifier:'available_hours',
-            txt_field:null,
-            created_at: currentDateTime()
+        if(!_.isEmpty(vendor_services.available_hours)){
+            let available_hours_arr = JSON.parse(vendor_services.available_hours)
+            //let available_hours_arr = vendor_services.available_hours
+            for(let j=0;j<available_hours_arr.length;j++){
+                let available_hours = {
+                    user_id:request.user().id,
+                    slug:request.user().id+'_available_hours'+available_hours_arr[j],
+                    service_id:available_hours_arr[j],
+                    identifier:'available_hours',
+                    txt_field:null,
+                    created_at: currentDateTime()
+                }
+                vendor_service_arr.push(available_hours)
+            }
+        }else{
+            let get_available_hours = await VendorInformation.query().where('user_id',request.user().id).where('identifier','available_hours');
+            for(let i=0;i<get_available_hours.length;i++){
+                let available_hours = {
+                    user_id:get_available_hours[i].user_id,
+                    slug:request.user().id+'_available_hours'+get_available_hours[i].id,
+                    service_id:get_available_hours[i].service_id,
+                    identifier:'available_hours',
+                    txt_field:null,
+                    created_at: currentDateTime()
+                }
+                vendor_service_arr.push(available_hours)
+            }
         }
-        vendor_service_arr.push(available_hours)
-        let available_day = {
-            user_id:request.user().id,
-            slug:request.user().id+'_available_day',
-            service_id:!_.isEmpty(vendor_services.available_day) ? vendor_services.available_day : old_ser_four,
-            identifier:'available_day',
-            txt_field:null,
-            created_at: currentDateTime()
+        if(!_.isEmpty(vendor_services.available_day)){
+            let available_day_arr = JSON.parse(vendor_services.available_day)
+            //let available_day_arr = vendor_services.available_day
+            for(let k=0;k<available_day_arr.length;k++){
+            let available_day = {
+                user_id:request.user().id,
+                slug:request.user().id+'_available_day'+available_day_arr[k],
+                service_id:available_day_arr[k],
+                identifier:'available_day',
+                txt_field:null,
+                created_at: currentDateTime()
+            }
+            vendor_service_arr.push(available_day)
+            }
+        }else{
+            let get_available_day = await VendorInformation.query().where('user_id',request.user().id).where('identifier','available_day');
+            for(let i=0;i<get_available_day.length;i++){
+                let available_day = {
+                    user_id:get_available_day[i].user_id,
+                    slug:request.user().id+'_available_day'+get_available_day[i].id,
+                    service_id:get_available_day[i].service_id,
+                    identifier:'available_day',
+                    txt_field:null,
+                    created_at: currentDateTime()
+                }
+                vendor_service_arr.push(available_day)
+            }
         }
-        vendor_service_arr.push(available_day)
         let per_hour_rate = {
             user_id:request.user().id,
             slug:request.user().id+'_per_hour_rate',

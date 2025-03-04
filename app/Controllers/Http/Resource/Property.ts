@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {baseUrl,storageUrl} from 'App/Helpers/Index'
 import PublicUser from './PublicUser';
 import PropertyCategory from 'App/Models/PropertyCategory';
+import PropertyTask from './PropertyTask';
 
 export default class Property
 {
@@ -54,13 +55,17 @@ export default class Property
           property_colors: _.isEmpty(record.property_colors) ? await PropertyCategory.getCategory(record.property_colors) : {},
           property_home: _.isEmpty(record.property_home) ? await PropertyCategory.getCategory(record.property_home) : {},
           property_rooms: _.isEmpty(record.property_rooms) ? await PropertyCategory.getCategory(record.property_rooms) : {},
-          property_extra_space: _.isEmpty(record.property_extra_space) ? await PropertyCategory.getCategory(record.property_extra_space) : {},
-          property_landscape: _.isEmpty(record.property_landscape) ? await PropertyCategory.getCategory(record.property_landscape) : {},
+          //property_extra_space: _.isEmpty(record.property_extra_space) ? await PropertyCategory.getCategory(record.property_extra_space) : {},
+          property_extra_space: !_.isEmpty(record.property_extra_space) ? await PropertyCategory.getCategoryArr(record.property_extra_space) : [],
+          //property_landscape: _.isEmpty(record.property_landscape) ? await PropertyCategory.getCategory(record.property_landscape) : {},
+          property_landscape: !_.isEmpty(record.property_landscape) ? await PropertyCategory.getCategoryArr(record.property_landscape) : [],
           property_air_conditions: _.isEmpty(record.property_air_conditions) ? await PropertyCategory.getCategory(record.property_air_conditions) : {},
           property_furnace: _.isEmpty(record.property_furnace) ? await PropertyCategory.getCategory(record.property_furnace) : {},
           property_solar_panel: _.isEmpty(record.property_solar_panel) ? await PropertyCategory.getCategory(record.property_solar_panel) : {},
-          property_household: _.isEmpty(record.property_household) ? await PropertyCategory.getCategory(record.property_household) : {},
+          //property_household: _.isEmpty(record.property_household) ? await PropertyCategory.getCategory(record.property_household) : {},
+          property_household: !_.isEmpty(record.property_household) ? await PropertyCategory.getCategoryArr(record.property_household) : [],
           property_notification: _.isEmpty(record.property_notification) ? await PropertyCategory.getCategory(record.property_notification) : {},
+          property_task: !_.isEmpty(record.PropertyTask) ? await PropertyTask.initResponse(record.PropertyTask,request) : [],
           status:record.status,
       }
   }

@@ -3,7 +3,6 @@ import PropertyTask from 'App/Models/PropertyTask';
 import { currentDateTime } from 'App/Helpers/Index'
 import moment from 'moment';
 import Notification from 'App/Models/Notification';
-import PropertyTask from 'App/Models/PropertyTask';
 import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class PropertyTaskHook
@@ -27,7 +26,9 @@ export default class PropertyTaskHook
         if(!_.isEmpty(params.task_status)){
             query.where('task_status',params.task_status)
         }
-       query.preload('Property').preload('User').where('user_id',request.user().id).where('status',1)
+       query.preload('Property',function(pr){
+            pr.preload('PropertyTask')
+       }).preload('User').where('user_id',request.user().id).where('status',1)
     }
 
     /**

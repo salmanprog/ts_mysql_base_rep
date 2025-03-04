@@ -85,10 +85,10 @@ export default class UserController extends CrudController
         return [
             record.name,
             record.email,
-            record.mobile_no,
-            record.is_email_verify == 1 ? '<span class="btn btn-xs btn-success">Verified</span>' : '<span class="btn btn-xs btn-danger">Not Verified</span>',
+            record.total_property,
+            record.subscription_title ,
             record.status == 1 ? '<span class="btn btn-xs btn-success">Active</span>' : '<span class="btn btn-xs btn-danger">Disabled</span>',
-            moment(record.created_at).format('MM-DD-YYYY hh:mm A'),
+            moment(record.created_at).format('MM-DD-YYYY'),
             options
         ];
     }
@@ -114,7 +114,7 @@ export default class UserController extends CrudController
      */
     protected async beforeShowLoadModel()
     {
-
+       
     }
 
     /**

@@ -6,6 +6,7 @@ export default class extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+      table.string('slug',100).notNullable().unique()
       table.string('module',100).notNullable()
       table.integer('module_id').notNullable()
       table.string('filename',200).notNullable()

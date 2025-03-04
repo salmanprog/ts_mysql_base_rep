@@ -3,6 +3,7 @@ import { schema,rules } from '@ioc:Adonis/Core/Validator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Hash from '@ioc:Adonis/Core/Hash'
 import User from 'App/Models/User';
+import Vendor from 'App/Models/Vendor';
 import UserApiToken from 'App/Models/UserApiToken';
 import ResetPassword from 'App/Models/ResetPassword';
 import _ from 'lodash'
@@ -84,7 +85,12 @@ export default class UsersController extends RestController
             device_token: schema.string.optional({})
         })
         try{
-          validator = await this.__validate({ schema: validationRules })
+          validator = await this.__request.validate({ schema: validationRules,messages: {
+            'password.regex': 'The password format is invalid.',
+            'email.unique': 'The email has already been taken.',
+            'email.email': 'The email format is invalid.'
+          }
+          })
         } catch(error){
             this.__is_error = true;
             return this.sendError(
@@ -115,7 +121,7 @@ export default class UsersController extends RestController
             mobile_no: schema.string.optional({},[
                 rules.minLength(10),
                 rules.maxLength(15),
-                rules.regex(/^(\+?\d{1,3}[-])\d{9,12}$/),
+                rules.regex(/^\+1-\d{3}-\d{3}-\d{4}$/),
                 rules.unique({
                   table: 'users',
                   column: 'mobile_no',
@@ -275,8 +281,8 @@ export default class UsersController extends RestController
             ]),
             password: schema.string(),
             user_group_id: schema.string({}),
-            device_type: schema.enum.optional(['ios','android','web']),
-            device_token: schema.string.optional({})
+            //device_type: schema.enum.optional(['ios','android','web']),
+            //device_token: schema.string.optional({})
         })
         try{
            await this.__validate({ schema: validationRules })
@@ -289,7 +295,13 @@ export default class UsersController extends RestController
         }
         //get user by email
         let body_params = this.__request.all();
-        let user:any = await User.getUserByEmail(body_params.email);
+        let user:any = '';
+        if(body_params.user_group_id == 4){
+          user = await Vendor.getUserByEmail(body_params.email);
+        }else{
+          user = await User.getUserByEmail(body_params.email);
+        }
+         
         if( _.isEmpty(user) ){
             return this.sendError(
               I18n.locale(this.__request.language()).formatMessage('messages.validation_msg'),

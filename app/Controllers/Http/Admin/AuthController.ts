@@ -24,7 +24,7 @@ export default class AuthController extends Controller
           return this._submitLogin(request,response,session,auth)
         // console.log('check...............................');
         // return
-        return await this.loadAdminView(view,'auth.login',{});
+        return await this.loadAdminView(view,'auth.login');
     }
 
     private async _submitLogin(request: any,response:any,session:any,auth:any)

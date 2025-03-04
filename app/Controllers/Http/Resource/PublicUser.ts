@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import {baseUrl,storageUrl} from 'App/Helpers/Index'
+import Subscription from './Subscription';
 
 export default class PublicUser
 {
@@ -25,10 +26,18 @@ export default class PublicUser
   private static async jsonSchema(record: any,request:any)
   {
       return {
-          id: record.id,
-          name: record.name,
-          slug: record.slug,
-          image_url: !_.isEmpty(record.image_url) ?  await storageUrl(record.image_url) : baseUrl('/images/user-placeholder.jpg'),
+        id: record.id,
+        name: record.name,
+        username: record.username,
+        user_group_id: record.user_group_id,
+        slug: record.slug,
+        email: record.email,
+        image_url: !_.isEmpty(record.image_url) ?  await storageUrl(record.image_url) : baseUrl('/images/user-placeholder.jpg'),
+        is_socket:record.is_socket,
+        is_subscription:record.is_subscription,
+        total_property_task:record.total_property_task,
+        total_property_task_complete:record.total_property_task_complete,
+        total_property_task_pending:record.total_property_task_pending,
       }
   }
 
